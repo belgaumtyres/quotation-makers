@@ -27,27 +27,38 @@ async function loadCustomerDatabase() {
     try {
         const urlWithCacheBust = CUSTOMER_SHEET_URL + "&t=" + new Date().getTime();
         const response = await fetch(urlWithCacheBust);
-        const data = await response.text();
-        const rows = data.split('\n').slice(1);
+        const csvText = await response.text();
         
-        rows.forEach(row => {
-                const cols = row.split(',').map(c => c.trim().replace(/^"|"$/g, ''));
-                if (cols.length >= 8) { // Updated to check for 8 columns
-                    const phone = cols[0];
-                    if(phone && phone.length > 5) {
-                        customerDataMap[phone] = {
-                            name: row[1],
-                            gender: row[2],
-                            orgName: row[3],
-                            taluk: row[4],
-                            district: row[5],
-                            state: row[6],
-                            pincode: row[7],
-                            gstin: row[8] ? row[8].trim() : ""
-                        };
-                    }
-                }
-            });
+        const rows = csvText.split('\n').map(row => {
+            // Ensure commas inside quotes don't break the CSV split
+            const regex = /(?:\"([^\"]*)\")|([^,]+)/g;
+            let result = [];
+            let match;
+            while (match = regex.exec(row)) {
+                result.push(match[1] || match[2] || "");
+            }
+            return result;
+        });
+        
+        for (let i = 1; i < rows.length; i++) {
+            const cols = rows[i];
+            if (cols.length < 8) continue; // Skip empty rows
+
+            const phone = cols[0] ? cols[0].toString().trim() : "";
+            
+            if (phone && phone.length > 5) {
+                customerDataMap[phone] = {
+                    name: cols[1] ? cols[1].trim() : "",
+                    gender: cols[2] ? cols[2].trim() : "",
+                    orgName: cols[3] ? cols[3].trim() : "",
+                    taluk: cols[4] ? cols[4].trim() : "",
+                    district: cols[5] ? cols[5].trim() : "",
+                    state: cols[6] ? cols[6].trim() : "",
+                    pincode: cols[7] ? cols[7].trim() : "",
+                    gstin: cols[8] ? cols[8].trim() : ""
+                };
+            }
+        }
         console.log("Customers loaded:", Object.keys(customerDataMap).length);
     } catch (error) {
         console.error("Error loading customer sheet:", error);

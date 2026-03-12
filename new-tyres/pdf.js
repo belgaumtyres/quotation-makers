@@ -15,8 +15,9 @@ async function generateQuotation() {
     drawHeader(doc, data);
     const finalY = drawTable(doc, data);
     drawFooter(doc, data, finalY);
-
-     window.open(doc.output('bloburl'), '_blank');
+    
+    // 3. Output PDF
+    window.open(doc.output('bloburl'), '_blank');
 }
 
 async function gatherQuotationData() {

@@ -201,47 +201,42 @@ const retreadDatabase = [
 let customerDataMap = {};
 
 async function loadCustomerDatabase() {
-    if (typeof CUSTOMER_SHEET_URL === 'undefined' || !CUSTOMER_SHEET_URL) {
-        console.error("CUSTOMER_SHEET_URL is missing in config.js");
-        return;
-    }
+    if (typeof CUSTOMER_SHEET_URL === 'undefined' || !CUSTOMER_SHEET_URL) return;
 
     try {
-        const response = await fetch(CUSTOMER_SHEET_URL);
+        // Cache buster ensures you always fetch the freshest data
+        const urlWithCacheBust = CUSTOMER_SHEET_URL + "&t=" + new Date().getTime();
+        const response = await fetch(urlWithCacheBust);
         const csvText = await response.text();
         
-        const rows = csvText.split('\n').map(row => {
-            // Ensure commas inside quotes don't break the CSV split
-            const regex = /(?:\"([^\"]*)\")|([^,]+)/g;
-            let result = [];
-            let match;
-            while (match = regex.exec(row)) {
-                result.push(match[1] || match[2] || "");
-            }
-            return result;
-        });
+        const rows = csvText.split('\n');
         
+        // Loop through all rows, skipping the header (index 0)
         for (let i = 1; i < rows.length; i++) {
             const row = rows[i];
-            if (row.length < 2) continue;
+            if (!row || row.trim() === "") continue; 
 
-            const phone = row[0] ? row[0].toString().trim() : "";
-            if (!phone) continue;
-
-            // Notice that row[8] successfully captures the 9th column (GSTIN) we added earlier!
-            customerDataMap[phone] = {
-                name: row[1] ? row[1].trim() : "",
-                gender: row[2] ? row[2].trim() : "",
-                orgName: row[3] ? row[3].trim() : "",
-                taluk: row[4] ? row[4].trim() : "",
-                district: row[5] ? row[5].trim() : "",
-                state: row[6] ? row[6].trim() : "",
-                pincode: row[7] ? row[7].trim() : "",
-                gstin: row[8] ? row[8].trim() : "" 
-            };
+            // The perfect CSV splitter: Handles commas inside quotes AND preserves empty columns
+            const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, ''));
+            
+            const phone = cols[0] ? cols[0].toString().trim() : "";
+            
+            // If it's a valid phone number, map the exact columns
+            if (phone && phone.length >= 10) {
+                customerDataMap[phone] = {
+                    name: cols[1] || "",
+                    gender: cols[2] || "",
+                    orgName: cols[3] || "",
+                    taluk: cols[4] || "",
+                    district: cols[5] || "",
+                    state: cols[6] || "",
+                    pincode: cols[7] || "",
+                    gstin: cols[8] || ""
+                };
+            }
         }
-        console.log("Customer database loaded successfully.");
+        console.log("Customers loaded successfully:", Object.keys(customerDataMap).length);
     } catch (error) {
-        console.error("Failed to load customer CSV:", error);
+        console.error("Error loading customer sheet:", error);
     }
 }

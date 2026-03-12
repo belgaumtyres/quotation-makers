@@ -17,7 +17,10 @@ async function generateQuotation() {
     drawFooter(doc, data, finalY);
     
     // 3. Output PDF
-    window.open(doc.output('bloburl'), '_blank');
+    // Dynamically names the file (e.g., BTK-25-26-0001.pdf or BTT-25-26-0001.pdf)
+    // and forces a direct download to bypass mobile pop-up blockers
+    const fileName = `${data.refNumber.replace(/\//g, '-')}.pdf`;
+    doc.save(fileName);
 }
 
 async function gatherQuotationData() {

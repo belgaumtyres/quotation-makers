@@ -19,7 +19,6 @@ async function generateQuotation() {
     // 3. Output PDF
     window.open(doc.output('bloburl'), '_blank');
 }
-}
 
 async function gatherQuotationData() {
     const custPhone = document.getElementById('customer-phone').value.trim();

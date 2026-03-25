@@ -32,8 +32,7 @@ async function generateQuotation() {
     }
 
     // 3. Output PDF
-    const fileName = `${data.refNumber.replace(/\//g, '-')}.pdf`;
-    doc.save(fileName);
+    window.open(doc.output('bloburl'), '_blank');
 }
 
 async function gatherQuotationData() {

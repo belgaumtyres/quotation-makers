@@ -21,11 +21,15 @@ async function generateQuotation() {
         doc.addPage();
         const pageWidth = doc.internal.pageSize.getWidth();
         const pageHeight = doc.internal.pageSize.getHeight();
-        
-        // Add a clean title at the top of the second page
-        doc.setFontSize(14);
+
+        // Apply the exact same background color as the first page
+        doc.setFillColor(255, 245, 245);
+        doc.rect(0, 0, pageWidth, pageHeight, 'F');
+
+        // Add title (Size 16 to match 'QUOTATION', All Caps)
+        doc.setFontSize(16);
         doc.setFont("helvetica", "bold");
-        doc.text("Retread Patterns Catalogue", pageWidth / 2, 15, { align: "center" });
+        doc.text("RETREAD PATTERNS CATALOGUE", pageWidth / 2, 15, { align: "center" });
 
         // Draw the image (leaves a 10mm margin, stretches cleanly to A4 proportions)
         doc.addImage(CATALOG_BASE64, 'JPEG', 10, 25, pageWidth - 20, pageHeight - 35);
@@ -152,7 +156,7 @@ function drawHeader(doc, data) {
     // Logo
     const logoX = pageWidth - 14 - 26; 
     if (typeof LOGO_BASE64 !== 'undefined' && LOGO_BASE64.length > 100) {
-        doc.addImage(LOGO_BASE64, 'PNG', logoX, 15, 70, 25);
+        doc.addImage(LOGO_BASE64, 'PNG', logoX - 15, 15, 50, 20);
     } else {
         doc.setFontSize(12);
         doc.setTextColor(200, 0, 0);

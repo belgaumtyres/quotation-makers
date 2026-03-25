@@ -35,7 +35,6 @@ async function generateQuotation() {
     const fileName = `${data.refNumber.replace(/\//g, '-')}.pdf`;
     doc.save(fileName);
 }
-}
 
 async function gatherQuotationData() {
     const custPhone = document.getElementById('customer-phone').value.trim();

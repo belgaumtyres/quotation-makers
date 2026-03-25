@@ -154,13 +154,16 @@ function drawHeader(doc, data) {
     if (FIRM_DETAILS.gstin) doc.text(FIRM_DETAILS.gstin, 14, 40);
 
     // Logo
-    const logoX = pageWidth - 14 - 26; 
+    const logoWidth = 60;
+    const logoHeight = 20;
+    const logoX = pageWidth - 14 - logoWidth; 
+
     if (typeof LOGO_BASE64 !== 'undefined' && LOGO_BASE64.length > 100) {
-        doc.addImage(LOGO_BASE64, 'PNG', logoX - 15, 15, 68, 20);
+        doc.addImage(LOGO_BASE64, 'PNG', logoX, 15, logoWidth, logoHeight);
     } else {
         doc.setFontSize(12);
         doc.setTextColor(200, 0, 0);
-        doc.text("[LOGO]", logoX, 25);
+        doc.text("[LOGO]", logoX + (logoWidth / 2) - 10, 25);
         doc.setTextColor(0, 0, 0);
     }
 

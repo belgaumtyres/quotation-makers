@@ -16,8 +16,25 @@ async function generateQuotation() {
     const finalY = drawTable(doc, data);
     drawFooter(doc, data, finalY);
 
+    // --- NEW LOGIC: Add Catalog Page ---
+    if (typeof CATALOG_BASE64 !== 'undefined' && CATALOG_BASE64.length > 100) {
+        doc.addPage();
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        
+        // Add a clean title at the top of the second page
+        doc.setFontSize(14);
+        doc.setFont("helvetica", "bold");
+        doc.text("Retread Patterns Reference Catalog", pageWidth / 2, 15, { align: "center" });
+
+        // Draw the image (leaves a 10mm margin, stretches cleanly to A4 proportions)
+        doc.addImage(CATALOG_BASE64, 'JPEG', 10, 25, pageWidth - 20, pageHeight - 35);
+    }
+
     // 3. Output PDF
-    window.open(doc.output('bloburl'), '_blank');
+    const fileName = `${data.refNumber.replace(/\//g, '-')}.pdf`;
+    doc.save(fileName);
+}
 }
 
 async function gatherQuotationData() {

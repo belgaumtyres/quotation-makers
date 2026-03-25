@@ -5,8 +5,7 @@
 
 const FIRM_DETAILS = {
     // Header Details
-    name: "BELGAUM TYRES",
-    subtitle: "(Unit of Belgaum Tyres & Treads Pvt Ltd.)",
+    name: "BELGAUM TYRES & TREADS PVT LTD.",
     addressLine1: "Plot No. 113/A, KIADB, Industrial Area,",
     addressLine2: "P.B. Road, Honaga,",
     addressLine3: "Belagavi, Karnataka - 591156.",

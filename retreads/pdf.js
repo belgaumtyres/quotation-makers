@@ -129,11 +129,10 @@ function drawHeader(doc, data) {
     
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
-    if (FIRM_DETAILS.subtitle) doc.text(FIRM_DETAILS.subtitle, 14, 25);
-    if (FIRM_DETAILS.addressLine1) doc.text(FIRM_DETAILS.addressLine1, 14, 30);
-    if (FIRM_DETAILS.addressLine2) doc.text(FIRM_DETAILS.addressLine2, 14, 35);
-    if (FIRM_DETAILS.addressLine3) doc.text(FIRM_DETAILS.addressLine3, 14, 40);
-    if (FIRM_DETAILS.gstin) doc.text(FIRM_DETAILS.gstin, 14, 45);
+    if (FIRM_DETAILS.addressLine1) doc.text(FIRM_DETAILS.addressLine1, 14, 25);
+    if (FIRM_DETAILS.addressLine2) doc.text(FIRM_DETAILS.addressLine2, 14, 30);
+    if (FIRM_DETAILS.addressLine3) doc.text(FIRM_DETAILS.addressLine3, 14, 35);
+    if (FIRM_DETAILS.gstin) doc.text(FIRM_DETAILS.gstin, 14, 40);
 
     // Logo
     const logoX = pageWidth - 14 - 26; 

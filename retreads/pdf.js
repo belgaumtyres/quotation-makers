@@ -248,7 +248,7 @@ function drawTable(doc, data) {
 
 function drawFooter(doc, data, finalY) {
     let currentY = finalY + 10;
-    const transportTerm = data.transportMode === 'exw' ? "Transportation costs extra." : "Free transportation of material to your site.";
+    const transportTerm = data.transportMode === 'exw' ? "Transportation costs extra." : "Free transportation of material to and from your site.";
     const paymentTerm = data.paymentMethod === 'advance' ? "Advance NEFT; before delivery." : "Credit; Within seven (7) days of material delivery.";
     
     doc.setFontSize(9);
@@ -257,7 +257,9 @@ function drawFooter(doc, data, finalY) {
     currentY += 5;
     doc.text("1. The above products are perfectly suited to your utility, based on our understanding of your need.", 14, currentY);
     currentY += 5;
-    doc.text("2. All the above products are under full manufacturer's warranty.", 14, currentY);
+    doc.text("2. All the above products are under standard warranty.", 14, currentY);
+    currentY += 5;
+    doc.text("3. Kindly refer to the pattern catalogue attached for visual references.", 14, currentY);
     currentY += 10;
 
     doc.setFont("helvetica", "bold");

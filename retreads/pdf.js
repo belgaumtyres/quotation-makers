@@ -137,7 +137,7 @@ function drawHeader(doc, data) {
     // Logo
     const logoX = pageWidth - 14 - 26; 
     if (typeof LOGO_BASE64 !== 'undefined' && LOGO_BASE64.length > 100) {
-        doc.addImage(LOGO_BASE64, 'PNG', logoX, 15, 30, 30);
+        doc.addImage(LOGO_BASE64, 'PNG', logoX, 15, 70, 25);
     } else {
         doc.setFontSize(12);
         doc.setTextColor(200, 0, 0);

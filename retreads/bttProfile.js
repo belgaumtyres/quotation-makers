@@ -19,5 +19,5 @@ const FIRM_DETAILS = {
     
     // Footer Details
     regardsName: "Belgaum Tyres,",
-    phoneNumber: "+91-7026615005 (Nikhil Pinto) / +91-7026615010 (Balu Pujari)"
+    phoneNumber: "+91-7026615010 (Balu Pujari)"
 };

@@ -73,7 +73,7 @@ async function gatherQuotationData() {
         return null;
     }
 
-    let refNumber = "BTK/25-26/XXXX"; 
+    let refNumber = "BTK/26-27/XXXX";
     const paymentMethod = document.getElementById('payment-method') ? document.getElementById('payment-method').value : "";
     const transportMode = document.getElementById('transport-mode') ? document.getElementById('transport-mode').value : "";
 

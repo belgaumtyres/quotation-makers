@@ -229,7 +229,7 @@ async function loadQuotation() {
     }
 
     // Automatically build the full reference number
-    const fullRefNumber = `BTT/25-26/${rawInput}`;
+    const fullRefNumber = `BTT/26-27/${rawInput}`;
 
     try {
         showToast(`Fetching quotation ${fullRefNumber}...`, "success");
